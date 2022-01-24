@@ -6,8 +6,7 @@ require('dotenv').config()
 const dirname ="C:/Users/user/Documents/marcus-vinicius/Projeto-Trainee-2-2021/"
 const PORT = 8080
 
-const teste = process.env.DB_TEST;
-console.log(teste)
+
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
