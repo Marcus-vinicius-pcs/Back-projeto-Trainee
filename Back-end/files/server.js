@@ -5,10 +5,20 @@ const sendMail = require('./mail.js')
 require('dotenv').config()
 const dirname ="C:/Users/user/Documents/marcus-vinicius/Projeto-Trainee-2-2021/"
 const PORT = 8080
-
+const bodyParser = require('body-parser');
+//Body Parser 
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json)
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+
+
+app.post('/add',(req, res)); {
+  const nome = req.body.nome;
+  const email = req.body.email;
+  const mensagem = req.body.mensagem;
+}
 
 app.post('/email', (req, res) => {
     const {subject, email, text} = req.body
