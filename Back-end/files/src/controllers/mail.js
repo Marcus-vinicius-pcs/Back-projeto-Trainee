@@ -32,6 +32,13 @@ const mailOptions = {
 };
 
 transport.sendMail(mailOptions, function(error, info){
+    if (error) {
+        res.send("Erro ao enviar o formuláio");
+        
+    } else {
+        res.send("Formulario enviado");
+    }
 });
+
 
 }
