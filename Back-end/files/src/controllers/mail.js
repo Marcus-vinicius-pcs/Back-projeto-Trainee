@@ -11,7 +11,7 @@ exports.sendMail = async (req, res) => {
   const destinatario = email; //para quem vamos enviar
   const titulo = 'Mensagem de' + nome;
 
-}
+
 
 const transport = nodemailer.createTransport({
 
@@ -22,7 +22,6 @@ const transport = nodemailer.createTransport({
         user: 'contadeenviodeforms@gmail.com', 
         pass: 'sintese123'
     }
-
 })
 
 const mailOptions = {
@@ -35,3 +34,4 @@ const mailOptions = {
 transport.sendMail(mailOptions, function(error, info){
 });
 
+}
