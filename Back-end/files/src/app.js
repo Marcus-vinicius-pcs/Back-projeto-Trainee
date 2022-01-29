@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const formRoutes = require('./routes/form.routes')
+const dotenv = require('dotenv').config();
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

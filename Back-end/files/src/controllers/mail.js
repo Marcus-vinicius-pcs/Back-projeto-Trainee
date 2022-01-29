@@ -5,11 +5,12 @@ exports.sendMail = async (req, res) => {
   const nome = req.body.nome;
   const email = req.body.email;
   const mensagem = req.body.mensagem;
+  
 
-  const usuario = 'contadeenviodeforms@gmail.com'; //para colocar o e-mail aqui
-  const senha = 'sintese123'; //para colocar a senha aqui
-  const destinatario = email; //para quem vamos enviar
-  const titulo = 'Mensagem de' + nome;
+  const usuario = process.env.EMAIL; 
+  const senha = process.env.SENHA; 
+  const destinatario = email; 
+  const titulo = 'Mensagem de ' + nome;
 
 
 
@@ -25,10 +26,10 @@ const transport = nodemailer.createTransport({
 })
 
 const mailOptions = {
-    from: 'contadeenviodeforms@gmail.com',
-    to: 'viniciuscognolatto@gmail.com',
-    subject: "Teste de envio de email 123",
-    text: "Some text"
+    from: usuario,
+    to: destinatario,
+    subject: titulo,
+    text: mensagem
 };
 
 transport.sendMail(mailOptions, function(error, info){
