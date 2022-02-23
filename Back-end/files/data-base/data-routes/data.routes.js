@@ -1,43 +1,78 @@
-const data = require('express-promise-router')();
+const express = require('express')
+const app = express()
+const mysql = require('mysql');
 
-//Arranjo de exemplo pra emular a database
-const elem = ['e1', 'e2', 'e3', 'e4'];
-
+const db = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "produtos"
+})
 // Retorna um elemento
 
-data.get('/produtos/:id', (req, res) => {
+app.get('/get/produtos/:id', (req, res) => {
     const { id } = req.params;
-
-    return res.json(elem[id]);
+    let SQL = "SELECT * from prod WHERE idprod = ?";
+    db.query(SQL, [id],(err, result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    })
 })
 
 //Retorna todos os elementos
-data.get('/produtos', (req, res) => {
-    return res.json(elem);
+app.get('/get/produtos', (req, res) => {
+    let SQL = "SELECT * from prod";
+    db.query(SQL, (err, result) => {
+        if(err) console.log(err)
+        else res.send(result)
+    })
 })
 
 //Criar novo elemento
-data.post('/produtos', (req, res) => {
+app.post('/register/produtos', (req, res) => {
     const { name } = req.body;
-    elem.push(name);
+    const { cost } = req.body;
+    const { category } = req.body;
     
-    return res.json(elem)
+    let SQL = "INSERT INTO prod ( name, cost, category ) VALUES ( ?,?,? )"
+
+    db.query(SQL, [name, cost, category],(err, result) => {
+        console.log(err)
+    })
 })
 
 //Atualizar um curso
-data.put('/produtos/:id', (req, res) => {
-    const { id } = req.params;
+app.put('/edit/produtos/', (req, res) => {
+    const { id } = req.body;
     const { name } = req.body;
-    elem[id] = name;
+    const { cost } = req.body;
+    const { category } = req.body;
     
-    return res.json(elem);
+    let SQL = "UPDATE prod SET name = ?, cost = ?, category = ? WHERE idprod = ?";
+    db.query(SQL, [name, cost, category, id],(err, result) => {
+        if(err) console.log(err)
+        else res.send(result);        
+    })
 })
 
 //Deletar um curso
-data.delete('/produtos/:id', (req, res) => {
+app.delete('/delete/produtos/:id', (req, res) => {
     const { id } = req.params;
-    elem.splice(id, 1);
-    return res.json({message: 'Elemento deletado com sucesso!'});
+    let SQL = "DELETE FROM prod WHERE idprod = ?"
+    db.query(SQL, [id], (err, result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    })
 })
 
-module.exports = data
+//teste de integração
+app.get('/', (req, res) => {
+    let SQL = 
+    "INSERT INTO prod ( name, cost, category ) VALUES ( 'Blusa', '120', 'Roupa')";
+
+    db.query(SQL, (err, result) => {
+        console.log(err)
+    })
+})
+
+module.exports = app
