@@ -18,10 +18,11 @@ app.get('/get/produtos/:id', (req, res) => {
         else res.send(result)
     })
 })
-
+//novo banco de dados o nome das tabelas está diferente, se atentar a isos
+//a req funcinoou no localhost 4040 mas a integração com o front n funcionou
 //Retorna todos os elementos
 app.get('/get/produtos', (req, res) => {
-    let SQL = "SELECT * from prod";
+    let SQL = "SELECT * from info";
     db.query(SQL, (err, result) => {
         if(err) console.log(err)
         else res.send(result)
