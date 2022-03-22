@@ -12,7 +12,7 @@ const db = mysql.createPool({
 
 app.get('/get/produtos/:id', (req, res) => {
     const { id } = req.params;
-    let SQL = "SELECT * from prod WHERE idprod = ?";
+    let SQL = "SELECT * from info WHERE id = ?";
     db.query(SQL, [id],(err, result)=>{
         if(err) console.log(err)
         else res.send(result)
